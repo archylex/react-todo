@@ -1,0 +1,30 @@
+.modalWindow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+}
+.modalWindow__content {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  color: #b7a6ca;
+  transform: scale(0.5);
+  transition: 0.3s;
+}
+.modalWindow__content__active {
+  transform: scale(1);
+}
+.modalWindow__active {
+  opacity: 1;
+  pointer-events: all;
+}
+/*# sourceMappingURL=ModalWindow.module.css.map */

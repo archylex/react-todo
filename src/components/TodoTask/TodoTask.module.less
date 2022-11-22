@@ -1,0 +1,49 @@
+@import "./../../Main";
+
+.task {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: 10px;
+    height: fit-content;
+    justify-content: space-between;
+    padding-left: 25px;
+    padding-right: 5px;
+    padding-top: 6px;
+    padding-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid @violetColor;
+    background-color: white;
+    color: @bgColor;
+    font-size: 1.2rem;
+}
+
+.iconsBar {
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    color: rgba(0, 0, 0, 0.35);    
+}
+
+.taskContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.taskTitle {
+    color: @violetColor;
+    font-size: 1.5rem;
+    font-weight: 600;
+    align-self: flex-start;
+}
+
+.taskFileContainer {
+    color: rgba(0, 0, 0, 0.35); 
+}
+
+.fileText {
+    font-weight: 600;
+    color: gray;
+}

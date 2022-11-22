@@ -1,0 +1,19 @@
+.customButton {
+  margin: 20px;
+  width: fit-content;
+  height: 40px;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-radius: 20px;
+  border: 1px solid #b7a6ca;
+  background-color: white;
+  color: #b7a6ca;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.customButton:hover {
+  border: 1px solid #ffffff;
+  background-color: #b7a6ca;
+  color: white;
+}
+/*# sourceMappingURL=CustomButton.module.css.map */

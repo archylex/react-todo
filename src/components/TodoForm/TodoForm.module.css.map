@@ -1,1 +1,1 @@
-{"version":3,"sources":["TodoForm.module.less"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,sBAAA","file":"TodoForm.module.css"}
+{"version":3,"sources":["F:/Projects/Sandbox/woman-todo/src/Main.less","TodoForm.module.less"],"names":[],"mappings":"AAGA;EACI,kBAAkB,iCAAlB;;AAGJ;EACI,aAAA;EACA,mBAAA;EACA,uBAAA;;ACRJ;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;;AAGJ;EDAI,aAAA;EACA,mBAAA;EACA,uBAAA;ECAA,WAAA","file":"TodoForm.module.css"}

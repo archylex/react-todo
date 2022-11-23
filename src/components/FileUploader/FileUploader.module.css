@@ -1,0 +1,40 @@
+.gradientBg {
+  background-image: linear-gradient(#367fec, #62c2f8);
+}
+.centerFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.uploadButton {
+  display: none;
+  margin-top: 50px;
+}
+.labelFile {
+  display: flex;
+  align-self: flex-end;
+  margin: 10px;
+  width: fit-content;
+  height: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 20px;
+  border: 1px solid #b7a6ca;
+  background-color: white;
+  color: #b7a6ca;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.labelFile:hover {
+  border: 1px solid #ffffff;
+  background-color: #b7a6ca;
+  color: white;
+}
+.fileBlock {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+}
+/*# sourceMappingURL=FileUploader.module.css.map */

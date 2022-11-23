@@ -1,3 +1,11 @@
+.gradientBg {
+  background-image: linear-gradient(#367fec, #62c2f8);
+}
+.centerFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .task {
   display: flex;
   width: 100%;
@@ -12,8 +20,19 @@
   border-radius: 8px;
   border: 1px solid #b7a6ca;
   background-color: white;
-  color: #ebaeb5;
+  color: gray;
   font-size: 1.2rem;
+  box-shadow: 1px 3px #777;
+}
+.completed {
+  /*border: 3px solid green;*/
+  background-color: lightgreen;
+  color: black;
+}
+.expired {
+  /*border: 3px solid red;*/
+  background-color: lightsalmon;
+  color: black;
 }
 .iconsBar {
   padding: 8px;
@@ -22,13 +41,35 @@
   align-items: flex-start;
   color: rgba(0, 0, 0, 0.35);
 }
+.removeIcon:hover {
+  color: red;
+  cursor: pointer;
+}
+.editIcon:hover {
+  color: blue;
+  cursor: pointer;
+}
+.attachIcon {
+  padding-top: 6px;
+}
+.checkIcon:hover {
+  color: green;
+  cursor: pointer;
+}
+.checkedIcon {
+  color: green;
+}
+.checkedIcon:hover {
+  color: green;
+  cursor: pointer;
+}
 .taskContent {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 .taskTitle {
-  color: #b7a6ca;
+  color: gray;
   font-size: 1.5rem;
   font-weight: 600;
   align-self: flex-start;
@@ -37,7 +78,25 @@
   color: rgba(0, 0, 0, 0.35);
 }
 .fileText {
+  margin-top: 8px;
+  font-size: 1.1rem;
   font-weight: 600;
   color: gray;
+}
+p {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+a {
+  color: gray;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 /*# sourceMappingURL=TodoTask.module.css.map */

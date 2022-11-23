@@ -1,10 +1,18 @@
+.gradientBg {
+  background-image: linear-gradient(#367fec, #62c2f8);
+}
+.centerFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .customButton {
   margin: 20px;
   width: fit-content;
   height: 40px;
-  padding-left: 50px;
-  padding-right: 50px;
-  border-radius: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 25px;
   border: 1px solid #b7a6ca;
   background-color: white;
   color: #b7a6ca;

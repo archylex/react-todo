@@ -1,0 +1,38 @@
+.gradientBg {
+  background-image: linear-gradient(#367fec, #62c2f8);
+}
+.centerFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headerBg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  background-image: linear-gradient(#367fec, #62c2f8);
+}
+.curtainBg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(47, 104, 179, 0.644);
+  width: 100%;
+  height: 100%;
+  border-bottom: 2px solid white;
+}
+.headerDate {
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: -1px 1px 0 #000;
+  text-align: center;
+}
+/*# sourceMappingURL=Header.module.css.map */

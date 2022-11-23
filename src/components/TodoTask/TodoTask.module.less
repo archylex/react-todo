@@ -14,8 +14,21 @@
     border-radius: 8px;
     border: 1px solid @violetColor;
     background-color: white;
-    color: @bgColor;
+    color: gray;
     font-size: 1.2rem;
+    box-shadow: 1px 3px #777;
+}
+
+.completed {
+    /*border: 3px solid green;*/
+    background-color: lightgreen;
+    color: black;
+}
+
+.expired {
+    /*border: 3px solid red;*/
+    background-color: lightsalmon;
+    color: black;
 }
 
 .iconsBar {
@@ -26,6 +39,36 @@
     color: rgba(0, 0, 0, 0.35);    
 }
 
+.removeIcon:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.editIcon:hover {
+    color: blue;
+    cursor: pointer;
+}
+
+.attachIcon {
+    padding-top: 6px;
+}
+
+.checkIcon {
+    &:hover {
+        color: green;
+        cursor: pointer;
+    }
+}
+
+.checkedIcon {
+    color: green;
+
+    &:hover {
+        color: green;
+        cursor: pointer;
+    }
+}
+
 .taskContent {
     display: flex;
     flex-direction: column;
@@ -33,7 +76,7 @@
 }
 
 .taskTitle {
-    color: @violetColor;
+    color: gray;
     font-size: 1.5rem;
     font-weight: 600;
     align-self: flex-start;
@@ -44,6 +87,26 @@
 }
 
 .fileText {
+    margin-top: 8px;
+    font-size: 1.1rem;
     font-weight: 600;
     color: gray;
+}
+
+p {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+a {
+    color: gray;
+    font-size: 0.8rem;
+    text-decoration: none;
+    &:visited {
+        text-decoration: none;
+    }
+    &:hover {
+        text-decoration: underline;
+    }
 }

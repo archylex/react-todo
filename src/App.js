@@ -21,7 +21,6 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [modalActive, setModalActive] = useState(false);
   const [editedTask, setEditedTask] = useState(null);
-  const [updatedTask, setUpdatedTask] = useState(null);
 
   /**
    * init hook

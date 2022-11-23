@@ -110,9 +110,7 @@ export default function App() {
           : { ...task }
       )
     );
-
-    setEditedTask(tasks.filter((value) => value.id === id)[0]);
-    
+   
     const task = tasks.filter((value) => value.id === id)[0];
     task.isCompleted = !task.isCompleted;
     task.files = emptyArrayToString(task.files);

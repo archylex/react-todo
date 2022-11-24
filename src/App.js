@@ -57,6 +57,7 @@ export default function App() {
    * Updates task by ID on Firebase DB
    */
   useEffect(() => {
+    console.log(taskId.current)
     if (taskId.current == null) return;
     const task = cloneObject(tasks.filter((value) => value.id === taskId.current)[0]);
     task.files = emptyArrayToString(task.files);
@@ -64,7 +65,6 @@ export default function App() {
     updates[`/${DB_ROOT}/${taskId.current}`] = task;
     update(ref(db), updates);    
     taskId.current = null;
-    console.log('useeffect')
   }, [tasks])
   
   /**
@@ -73,11 +73,20 @@ export default function App() {
    * @param {any} task
    */
   const updateTask = (task) => {
-    const updates = {};
-    const newTask = cloneObject(task);
-    newTask.files = emptyArrayToString(newTask.files);
-    updates[`/${DB_ROOT}/${newTask.id}`] = newTask;
-    update(ref(db), updates);
+    setTasks((current) =>
+      current.map((ctask) =>
+        ctask.id === task.id
+          ? { ...ctask, 
+            title: task.title,
+            description: task.description,
+            date: task.date,
+            files: task.files
+           }
+          : { ...ctask }
+      )
+    );
+
+    taskId.current = task.id;
   };
 
   /**

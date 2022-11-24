@@ -69,23 +69,19 @@ export default function TodoForm({
    */
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    if (task) {
-      task.title = title;
-      task.description = description;
-      task.date = expirationDate;
-      task.files = selectedFiles;
 
-      updateTask(task);
+    const newTask = {
+      id: task ? task.id : generateId(),
+      title,
+      description,
+      date: expirationDate,
+      files: selectedFiles,
+      isCompleted: task ? task.isCompleted : false,
+    };
+
+    if (task) {            
+      updateTask(newTask);    
     } else {
-      const task = {
-        id: generateId(),
-        title,
-        description,
-        date: expirationDate,
-        files: selectedFiles,
-        isCompleted: false,
-      };
-
       addTask(task);
     }
 

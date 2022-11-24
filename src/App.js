@@ -73,6 +73,8 @@ export default function App() {
    * @param {any} task
    */
   const updateTask = (task) => {
+    taskId.current = task.id;
+    
     setTasks((current) =>
       current.map((ctask) =>
         ctask.id === task.id
@@ -84,9 +86,7 @@ export default function App() {
            }
           : { ...ctask }
       )
-    );
-
-    taskId.current = task.id;
+    );   
   };
 
   /**

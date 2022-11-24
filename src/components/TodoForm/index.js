@@ -9,6 +9,17 @@ import styles from "./TodoForm.module.css";
 
 const UPLOAD_FOLDER = "/files/";
 
+const initialState = {
+  id: generateId(),
+  title: "",
+  description: "",
+  date: Date.now(),
+  files: [],
+  isCompleted: false,
+  percent: 0,
+  isLoaded: false,
+};
+
 /**
  * Todo Form Component for create and modify task
  *
@@ -24,33 +35,34 @@ export default function TodoForm({
   updateTask,
   callback = null,
 }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [expirationDate, setExpirationDate] = useState(Date.now());
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [percent, setPercent] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [formState, setFormState] = useState(initialState);
 
   /**
    * Fill all inputs if task exists
    */
   useEffect(() => {
     clearFields();
-    if (!task) return;
-    setTitle(task.title);
-    setDescription(task.description);
-    setExpirationDate(task.date);
-    setSelectedFiles(task.files);
+
+    if (task) {
+      setFormState((f) => {
+        return {
+          ...f,
+          id: task.id,
+          title: task.title,
+          description: task.description,
+          date: task.date,
+          files: task.files,
+          isCompleted: task.isCompleted,
+        };
+      });
+    }
   }, [task]);
 
   /**
    * Clear all inputs
    */
   const clearFields = () => {
-    setTitle("");
-    setDescription("");
-    setExpirationDate(Date.now());
-    setSelectedFiles([]);
+    setFormState((f) => initialState);
   };
 
   /**
@@ -59,7 +71,13 @@ export default function TodoForm({
    * @param {string} id The id of file
    */
   const onRemoveFileHandler = (id) => {
-    setSelectedFiles((current) => current.filter((value) => value.id !== id));
+    setFormState((f) => {
+      return {
+        ...f,
+        files: f.files.filter((value) => value.id !== id),
+      };
+    });
+    //setSelectedFiles((current) => current.filter((value) => value.id !== id));
   };
 
   /**
@@ -70,19 +88,10 @@ export default function TodoForm({
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
-    const newTask = {
-      id: task ? task.id : generateId(),
-      title,
-      description,
-      date: expirationDate,
-      files: selectedFiles,
-      isCompleted: task ? task.isCompleted : false,
-    };
-
-    if (task) {            
-      updateTask(newTask);    
+    if (task) {
+      updateTask(formState);
     } else {
-      addTask(task);
+      addTask(formState);
     }
 
     if (typeof callback === "function") {
@@ -95,7 +104,10 @@ export default function TodoForm({
    *
    * @param {any} event
    */
-  const onChangeTitleHandler = (event) => setTitle(event.target.value);
+  const onChangeTitleHandler = (event) =>
+    setFormState((f) => {
+      return { ...f, title: event.target.value };
+    });
 
   /**
    * Change description state
@@ -103,7 +115,9 @@ export default function TodoForm({
    * @param {any} event
    */
   const onChangeDescriptionHandler = (event) =>
-    setDescription(event.target.value);
+    setFormState((f) => {
+      return { ...f, description: event.target.value };
+    });
 
   /**
    * Change date state
@@ -112,7 +126,12 @@ export default function TodoForm({
    */
   const onChangeDateHandler = (event) => {
     if (!isNaN(Date.parse(event.target.value))) {
-      setExpirationDate(new Date(event.target.value).getTime());
+      setFormState((f) => {
+        return {
+          ...f,
+          date: new Date(event.target.value).getTime(),
+        };
+      });
     }
   };
 
@@ -126,7 +145,9 @@ export default function TodoForm({
     const storageRef = ref(storage, `${UPLOAD_FOLDER}${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    setIsLoaded((current) => !current);
+    setFormState((f) => {
+      return { ...f, isLoaded: !f.isLoaded };
+    });
 
     uploadTask.on(
       "state_changed",
@@ -134,7 +155,9 @@ export default function TodoForm({
         const percent = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        setPercent(percent);
+        setFormState((f) => {
+          return { ...f, percent: percent };
+        });
       },
       null,
       () => {
@@ -145,9 +168,15 @@ export default function TodoForm({
             url: url,
             size: file.size,
           };
-          setSelectedFiles((current) => [...current, newFile]);
+
+          setFormState((f) => {
+            return { ...f, files: [...f.files, newFile] };
+          });
         });
-        setIsLoaded((current) => !current);
+
+        setFormState((f) => {
+          return { ...f, isLoaded: !f.isLoaded };
+        });
       }
     );
   };
@@ -157,33 +186,35 @@ export default function TodoForm({
       <CustomInput
         type="text"
         placeholder="Title"
-        value={title}
+        value={formState.title}
         onChange={onChangeTitleHandler}
       />
       <CustomInput
         type="text"
         placeholder="Description"
-        value={description}
+        value={formState.description}
         onChange={onChangeDescriptionHandler}
       />
       <CustomInput
         type="datetime-local"
         placeholder="Expiration Date"
-        value={toLocalDate(new Date(expirationDate))}
+        value={toLocalDate(new Date(formState.date))}
         onChange={onChangeDateHandler}
       />
 
-      {isLoaded && <p className={styles.percentLoader}>{percent}%</p>}
-      {!isLoaded && (
+      {formState.isLoaded && (
+        <p className={styles.percentLoader}>{formState.percent}%</p>
+      )}
+      {!formState.isLoaded && (
         <FileUploader
-          selectedFiles={selectedFiles}
+          selectedFiles={formState.files}
           onRemoveFile={onRemoveFileHandler}
           onFileSelectSuccess={onFileUploadHandler}
           onFileSelectError={({ error }) => alert(error)}
         />
       )}
 
-      {!isLoaded && (
+      {!formState.isLoaded && (
         <CustomButton type="submit">{task ? "Edit" : "Add"}</CustomButton>
       )}
     </form>

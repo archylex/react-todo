@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { onValue, ref, set, update } from "firebase/database";
 import { db } from "./firebaseConfig";
 import CustomButton from "./components/CustomButton";
@@ -21,7 +21,6 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [modalActive, setModalActive] = useState(false);
   const [editedTask, setEditedTask] = useState(null);
-  const taskId = useRef(null);
 
   /**
    * init hook
@@ -36,12 +35,8 @@ export default function App() {
       if (snapshot.exists()) {
         Object.entries(data).forEach(([_, value]) => {
           const task = {
-            id: value.id,
-            title: value.title,
-            description: value.description,
-            date: value.date,
+            ...value,
             files: value.files === "" ? [] : value.files,
-            isCompleted: value.isCompleted,
           };
           array.push(task);
         });
@@ -54,39 +49,36 @@ export default function App() {
   }, []);
 
   /**
-   * Updates task by ID on Firebase DB
+   * Updates todo/task on Firebase DB by ID
+   *
+   * @param {object} task A task
    */
-  useEffect(() => {
-    console.log(taskId.current)
-    if (taskId.current == null) return;
-    const task = cloneObject(tasks.filter((value) => value.id === taskId.current)[0]);
-    task.files = emptyArrayToString(task.files);
+  const updateOnDB = (task) => {
+    const utask = cloneObject(task);
+    utask.files = emptyArrayToString(task.files);
     const updates = {};
-    updates[`/${DB_ROOT}/${taskId.current}`] = task;
-    update(ref(db), updates);    
-    taskId.current = null;
-  }, [tasks])
-  
+    updates[`/${DB_ROOT}/${task.id}`] = utask;
+    update(ref(db), updates);
+  };
+
   /**
    * Update task on firebase database
    *
    * @param {any} task
    */
   const updateTask = (task) => {
-    taskId.current = task.id;
-    
+    updateOnDB(task);
+
     setTasks((current) =>
       current.map((ctask) =>
         ctask.id === task.id
-          ? { ...ctask, 
-            title: task.title,
-            description: task.description,
-            date: task.date,
-            files: task.files
-           }
+          ? {
+              ...ctask,
+              ...task,
+            }
           : { ...ctask }
       )
-    );   
+    );
   };
 
   /**
@@ -98,11 +90,7 @@ export default function App() {
     setTasks((current) => [...current, task]);
 
     set(ref(db, `/${DB_ROOT}/${task.id}`), {
-      title: task.title,
-      id: task.id,
-      description: task.description,
-      date: task.date,
-      isCompleted: task.isCompleted,
+      ...task,
       files: emptyArrayToString(task.files),
     });
   };
@@ -125,13 +113,14 @@ export default function App() {
    *
    * @param {string} id
    */
-  const toggleTaskHandler = (id) => {
-    taskId.current = id;
-
+  const toggleTaskHandler = (toggledTask) => {
+    toggledTask.isCompleted = !toggledTask.isCompleted;
+    updateOnDB(toggledTask);
+    
     setTasks((current) =>
       current.map((task) =>
-        task.id === id
-          ? { ...task, isCompleted: !task.isCompleted }
+      task.id === toggledTask.id
+          ? { ...task, isCompleted: toggledTask.isCompleted }
           : { ...task }
       )
     );
@@ -142,8 +131,7 @@ export default function App() {
    *
    * @param {string} id
    */
-  const editTaskHandler = (id) => {
-    const task = tasks.filter((value) => value.id === id)[0];
+  const editTaskHandler = (task) => {
     setEditedTask(task);
     showModalWindow();
   };

@@ -55,18 +55,18 @@ export default function TodoTask({ task, removeTask, toggleTask, editTask }) {
         />
         <RiPencilFill
           className={`${styles.icon} ${styles.editIcon}`}
-          onClick={() => editTask(task.id)}
+          onClick={() => editTask(task)}
         />
         {!task.isCompleted && (
           <RiCheckboxBlankFill
             className={`${styles.icon} ${styles.checkIcon}`}
-            onClick={() => toggleTask(task.id)}
+            onClick={() => toggleTask(task)}
           />
         )}
         {task.isCompleted && (
           <RiCheckboxFill
             className={`${styles.checkedIcon} ${styles.checkIcon}`}
-            onClick={() => toggleTask(task.id)}
+            onClick={() => toggleTask(task)}
           />
         )}
       </div>

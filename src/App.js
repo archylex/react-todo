@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { onValue, ref, set, update } from "firebase/database";
 import { db } from "./firebaseConfig";
 import CustomButton from "./components/CustomButton";
@@ -21,6 +21,7 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [modalActive, setModalActive] = useState(false);
   const [editedTask, setEditedTask] = useState(null);
+  const taskId = useRef(null);
 
   /**
    * init hook
@@ -51,6 +52,20 @@ export default function App() {
       setTasks([...newArray]);
     });
   }, []);
+
+  /**
+   * Updates task by ID on Firebase DB
+   */
+  useEffect(() => {
+    if (taskId.current == null) return;
+    const task = cloneObject(tasks.filter((value) => value.id === taskId.current)[0]);
+    task.files = emptyArrayToString(task.files);
+    const updates = {};
+    updates[`/${DB_ROOT}/${taskId.current}`] = task;
+    update(ref(db), updates);    
+    taskId.current = null;
+    console.log('useeffect')
+  }, [tasks])
   
   /**
    * Update task on firebase database
@@ -102,6 +117,8 @@ export default function App() {
    * @param {string} id
    */
   const toggleTaskHandler = (id) => {
+    taskId.current = id;
+
     setTasks((current) =>
       current.map((task) =>
         task.id === id
@@ -109,13 +126,6 @@ export default function App() {
           : { ...task }
       )
     );
-   
-    const task = tasks.filter((value) => value.id === id)[0];
-    task.isCompleted = !task.isCompleted;
-    task.files = emptyArrayToString(task.files);
-    const updates = {};
-    updates[`/${DB_ROOT}/${id}`] = task;
-    update(ref(db), updates);    
   };
 
   /**

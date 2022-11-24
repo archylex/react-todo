@@ -9,14 +9,13 @@ import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBQy4ULOWADF5vnvzJJbR3leJdZosaftZQ",
-  authDomain: "womantodo-abd22.firebaseapp.com",
-  projectId: "womantodo-abd22",
-  storageBucket: "womantodo-abd22.appspot.com",
-  messagingSenderId: "92710924364",
-  appId: "1:92710924364:web:44dff09cabf2ecad40c4e9",
-  measurementId: "G-8DDM7ME0DZ",
-  databaseURL: "https://womantodo-abd22-default-rtdb.firebaseio.com/"
+  apiKey: "AIzaSyCRYOk1BYP-FxDEgVgY84uaqs5Uk_9N0Uc",
+  authDomain: "react-todo-58290.firebaseapp.com",
+  databaseURL: "https://react-todo-58290-default-rtdb.firebaseio.com",
+  projectId: "react-todo-58290",
+  storageBucket: "react-todo-58290.appspot.com",
+  messagingSenderId: "293051100668",
+  appId: "1:293051100668:web:615426e371675c9e07d679"
 };
 
 // Initialize Firebase

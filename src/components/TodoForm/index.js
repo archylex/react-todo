@@ -47,12 +47,7 @@ export default function TodoForm({
       setFormState((f) => {
         return {
           ...f,
-          id: task.id,
-          title: task.title,
-          description: task.description,
-          date: task.date,
-          files: task.files,
-          isCompleted: task.isCompleted,
+          ...task
         };
       });
     }
